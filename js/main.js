@@ -9,18 +9,22 @@ var cards = [
 ];
 
 var cardsInPlay = [];
+var score = 0;
 
 var checkForMatch = function() {
   if (cardsInPlay[0] === cardsInPlay[1]) {
       alert("You found a match!");
+      score += 1;
   } else {
       alert("Sorry, try again.");
+      score -= 1;
   }
+  alert("Current Score: " + score);
 };
 
 var flipCard = function() {
-  var cardId = this.getAttribute('data-id');
-  this.setAttribute('src', cards[cardId].cardImage);
+  var cardId = this.getAttribute("data-id");
+  this.setAttribute("src", cards[cardId].cardImage);
   console.log("User flipped " + cards[cardId].rank);
   cardsInPlay.push(cards[cardId].rank);
   console.log(cards[cardId].cardImage);
@@ -34,29 +38,23 @@ var flipCard = function() {
 
 var createBoard = function() {
   for (i = 0; i < cards.length; i++) {
-    var cardElement = document.createElement('img');
-    cardElement.setAttribute('src', "images/back.png");
-    cardElement.setAttribute('data-id', i);
-    cardElement.addEventListener('click', flipCard);
-    document.getElementById('game-board').appendChild(cardElement);
+    var cardElement = document.createElement("img");
+    cardElement.setAttribute("src", "images/back.png");
+    cardElement.setAttribute("data-id", i);
+    cardElement.addEventListener("click", flipCard);
+    document.getElementById("game-board").appendChild(cardElement);
   }
 };
 
 var reset = function() {
   cardsInPlay.length = 0;
-  //for (i = 0; i < cardsInPlay.length; i++) {
-    //document.getElementById('img')[i].setAttribute('src', "images/back.png");
-    //var board = document.getElementById('img');
-    //board.setAttribute('src', "images/back.png");
-    //var parent = document.getElementById('game-board');
-    //var child = document.getElementById('img');
-    //parent.removeChild(child);
-    //var board = document.querySelector('game-board');
-    //board.parentNode.removeChild(board);
-    //createBoard();
+  var imgElements = document.getElementsByTagName("img");
+  for(i = 0; i < imgElements.length; i++) {
+    imgElements[i].setAttribute("src", "images/back.png");
+  }
 };
 
 createBoard();
 
-var button = document.querySelector('button');
-button.addEventListener('click', reset);
+var button = document.querySelector("button");
+button.addEventListener("click", reset);
